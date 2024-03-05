@@ -1,4 +1,9 @@
 import json
+from faker import Faker
+import random
+import os
+
+fake = Faker()
 
 
 class Student:
@@ -14,6 +19,12 @@ class Student:
 class StudentManagement:
     def __init__(self):
         self.students = []
+        self.grade_char = ["A", "B", "C", "D", "E", "F"]
+
+    # Check if JSON file is empty
+    @staticmethod
+    def is_json_file_empty(filename):
+        return not os.path.exists(filename) or os.path.getsize(filename) == 0
 
     # Custom JSON encoder for Student object
     @staticmethod
@@ -67,11 +78,21 @@ class StudentManagement:
                 high = mid - 1
         return None
 
+    # Generate fake students with Faker library
+    def generate_fake_students(self, num_students):
+        self.students = [Student(fake.name(), random.randint(1000, 9999), random.choice(self.grade_char))
+                         for _ in range(num_students)]
 
+        self.bubble_sort()
+        self.write_data(self.students)
 
 
 def main():
     management = StudentManagement()
+
+    # Generate fake students if JSON file is empty
+    if management.is_json_file_empty("student_data.json"):
+        management.generate_fake_students(10)
 
     while True:
         print("\nMenu:")
