@@ -95,6 +95,14 @@ class StudentManagement:
         self.write_data(self.students)
         print("Student added successfully!")
 
+    # Display all students
+    def display_students(self):
+        self.students = self.read_data()
+        if self.students:
+            print("Added students:")
+            for student in self.students:
+                print(student)
+
 
 def main():
     management = StudentManagement()
@@ -144,6 +152,11 @@ def main():
                     print(str(e))
 
             management.add_student(name, roll_number, grade)
+
+        elif choice == "2":
+            management.display_students()
+
+
 
 
 if __name__ == '__main__':
