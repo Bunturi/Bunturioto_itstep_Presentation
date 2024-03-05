@@ -1,3 +1,4 @@
+import json
 
 
 class Student:
@@ -13,6 +14,35 @@ class Student:
 class StudentManagement:
     def __init__(self):
         self.students = []
+
+    # Custom JSON encoder for Student object
+    @staticmethod
+    def custom_encoder(obj):
+        if isinstance(obj, Student):
+            return {
+                "name": obj.name,
+                "roll_number": obj.roll_number,
+                "grade": obj.grade
+            }
+        return obj
+
+    # Custom JSON decoder for Student object
+    @staticmethod
+    def custom_decoder(json_data):
+        return Student(json_data['name'], json_data['roll_number'], json_data['grade'])
+
+    # Write data to JSON file
+    @staticmethod
+    def write_data(lst):
+        with open("student_data.json", "w") as json_file:
+            json.dump(lst, json_file, default=StudentManagement.custom_encoder, indent=4)
+
+    # Read data from JSON file
+    @staticmethod
+    def read_data():
+        with open("student_data.json", "r") as read_json:
+            python_data = json.load(read_json, object_hook=StudentManagement.custom_decoder)
+            return python_data
 
 
 def main():
