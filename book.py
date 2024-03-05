@@ -146,8 +146,16 @@ def main():
         elif choice == "2":
             manager.display_books()
 
+        elif choice == "3":
+            title = input("Enter the title to search: ")
+            manager.search_book_by_title(title)
+
         elif choice == "4":
             print("Exiting the program. Goodbye!")
             break
         else:
             print("Invalid choice. Please enter a number between 1 and 4.")
+
+
+if __name__ == '__main__':
+    main()
