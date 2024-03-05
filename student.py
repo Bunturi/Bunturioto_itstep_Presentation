@@ -114,6 +114,18 @@ class StudentManagement:
         else:
             print("Student not found")
 
+    # Update a student's grade
+    def update_student_grade(self, roll_number, new_grade):
+        self.students = self.read_data()
+
+        student = self.binary_search(roll_number)
+
+        if student:
+            student.grade = new_grade
+            self.write_data(self.students)
+        else:
+            print("Student not found.")
+
 
 def main():
     management = StudentManagement()
@@ -179,7 +191,32 @@ def main():
 
             management.search_student_by_roll_number(roll_number_to_search)
 
+        elif choice == "4":
+            while True:
+                try:
+                    roll_number_to_update = int(input("Enter roll number of the student to update grade: "))
+                    if not str(roll_number_to_update).isdigit():
+                        raise ValueError("Invalid roll number. Roll number must contain only digits.")
+                    break
+                except ValueError as e:
+                    print(str(e))
 
+            while True:
+                try:
+                    new_grade = input("Enter new grade: ")
+                    if new_grade.upper() not in ["A", "B", "C", "D", "E", "F"]:
+                        raise ValueError("Invalid grade. Grade must be one of: A, B, C, D, E, F")
+                    break
+                except ValueError as e:
+                    print(str(e))
+
+            management.update_student_grade(roll_number_to_update, new_grade)
+
+        elif choice == "5":
+            print("Exiting the program. Goodbye!")
+            break
+        else:
+            print("Invalid choice. Please enter a number between 1 and 5.")
 
 
 if __name__ == '__main__':
