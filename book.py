@@ -66,6 +66,13 @@ class BookManager:
             self.books.append(Book(title, author, publication_year))
         self.write_data(self.books)
 
+    def add_book(self, title, author, publication_year):
+        # Add a new book to the list and write it to the JSON file.
+        self.books = self.read_data()
+        self.books.append(Book(title, author.capitalize(), publication_year))
+        self.write_data(self.books)
+        print("Book added successfully!")
+
 
 def main():
     # Main function to run the program.
@@ -82,3 +89,36 @@ def main():
         print("4. Exit")
 
         choice = input("Enter your choice: ")
+
+        if choice == "1":
+            title = input("Enter the title of the book: ")
+
+            while True:
+                try:
+                    author = input("Enter the author of the book: ").capitalize()
+                    if not author.replace(" ", "").isalpha():
+                        raise ValueError("Invalid author. Author must contain only alphabets and spaces.")
+                    break
+                except ValueError as e:
+                    print(str(e))
+
+            while True:
+                try:
+                    publication_year = int(input("Enter the publication year of the book: "))
+                    if not str(publication_year).isdigit():
+                        raise ValueError("Invalid publication year. Publication year must contain only digits.")
+                    if not (publication_year <= 2024):
+                        raise ValueError("Invalid publication year. Publication year must be less than 2024.")
+                    break
+                except ValueError as e:
+                    print(str(e))
+
+            books = manager.read_data()
+            found_book = [book for book in books
+                          if book.title.lower() == title.lower() and book.author.lower() == author.lower()]
+
+            if found_book:
+                print(f"There is already such a book: {found_book}")
+            else:
+                manager.add_book(title, author, publication_year)
+                print("Book added successfully")
