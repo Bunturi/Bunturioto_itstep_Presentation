@@ -53,6 +53,20 @@ class StudentManagement:
                     self.students[j], self.students[j + 1] = self.students[j + 1], self.students[j]
         return self.students
 
+    # Binary search by roll number
+    def binary_search(self, roll_number):
+        low = 0
+        high = len(self.students) - 1
+        while low <= high:
+            mid = (low + high) // 2
+            if self.students[mid].roll_number == roll_number:
+                return self.students[mid]
+            elif self.students[mid].roll_number < roll_number:
+                low = mid + 1
+            else:
+                high = mid - 1
+        return None
+
 
 
 
