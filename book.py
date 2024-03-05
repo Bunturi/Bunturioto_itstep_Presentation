@@ -1,7 +1,9 @@
 import json
 from faker import Faker
+import os
 
 fake = Faker()
+
 
 class Book:
     def __init__(self, title, author, publication_year):
@@ -19,6 +21,11 @@ class BookManager:
     def __init__(self):
         # Initialize a BookManager object.
         self.books = []
+
+    @staticmethod
+    def is_json_file_empty(filename):
+        # Check if the JSON file is empty.
+        return not os.path.exists(filename) or os.path.getsize(filename) == 0
 
     @staticmethod
     def custom_encoder(obj):
@@ -58,3 +65,20 @@ class BookManager:
             publication_year = fake.year()
             self.books.append(Book(title, author, publication_year))
         self.write_data(self.books)
+
+
+def main():
+    # Main function to run the program.
+    manager = BookManager()
+
+    if manager.is_json_file_empty("book_data.json"):
+        manager.generate_fake_books(10)
+
+    while True:
+        print("\nMenu:")
+        print("1. Add New Book")
+        print("2. View All Books")
+        print("3. Search Book by Title")
+        print("4. Exit")
+
+        choice = input("Enter your choice: ")
