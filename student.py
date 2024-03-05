@@ -44,6 +44,17 @@ class StudentManagement:
             python_data = json.load(read_json, object_hook=StudentManagement.custom_decoder)
             return python_data
 
+    # Bubble sort by roll number
+    def bubble_sort(self):
+        n = len(self.students)
+        for i in range(n - 1):
+            for j in range(0, n - i - 1):
+                if self.students[j].roll_number > self.students[j + 1].roll_number:
+                    self.students[j], self.students[j + 1] = self.students[j + 1], self.students[j]
+        return self.students
+
+
+
 
 def main():
     management = StudentManagement()
