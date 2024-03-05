@@ -1,5 +1,7 @@
 import json
+from faker import Faker
 
+fake = Faker()
 
 class Book:
     def __init__(self, title, author, publication_year):
@@ -46,3 +48,13 @@ class BookManager:
         with open("book_data.json", "r") as read_json:
             python_data = json.load(read_json, object_hook=BookManager.custom_decoder)
             return python_data
+
+    def generate_fake_books(self, num_books):
+        # Generate fake books using Faker and write them to the JSON file.
+        self.books = []
+        for _ in range(num_books):
+            title = fake.catch_phrase()
+            author = fake.name()
+            publication_year = fake.year()
+            self.books.append(Book(title, author, publication_year))
+        self.write_data(self.books)
