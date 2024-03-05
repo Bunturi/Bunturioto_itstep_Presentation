@@ -74,12 +74,24 @@ class BookManager:
         print("Book added successfully!")
 
     def display_books(self):
-        # Display all the books in the list.
+        # Display all the books
         self.books = self.read_data()
         if self.books:
             print("Added books:")
             for book in self.books:
                 print(book)
+
+    def search_book_by_title(self, title):
+        # Search for a book by title and display the matching books.
+        self.books = self.read_data()
+        found_books = [book for book in self.books if book.title.lower() == title.lower()]
+
+        if found_books:
+            print("Matching books found:")
+            for book in found_books:
+                print(book)
+        else:
+            print("No matching books found.")
 
 
 def main():
@@ -134,3 +146,8 @@ def main():
         elif choice == "2":
             manager.display_books()
 
+        elif choice == "4":
+            print("Exiting the program. Goodbye!")
+            break
+        else:
+            print("Invalid choice. Please enter a number between 1 and 4.")
