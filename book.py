@@ -73,6 +73,14 @@ class BookManager:
         self.write_data(self.books)
         print("Book added successfully!")
 
+    def display_books(self):
+        # Display all the books in the list.
+        self.books = self.read_data()
+        if self.books:
+            print("Added books:")
+            for book in self.books:
+                print(book)
+
 
 def main():
     # Main function to run the program.
@@ -122,3 +130,7 @@ def main():
             else:
                 manager.add_book(title, author, publication_year)
                 print("Book added successfully")
+
+        elif choice == "2":
+            manager.display_books()
+
