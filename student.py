@@ -86,6 +86,15 @@ class StudentManagement:
         self.bubble_sort()
         self.write_data(self.students)
 
+    # Add a new student
+    def add_student(self, name, roll_number, grade):
+        self.students = self.read_data()
+        self.students.append(Student(name, roll_number, grade.upper()))
+
+        self.bubble_sort()
+        self.write_data(self.students)
+        print("Student added successfully!")
+
 
 def main():
     management = StudentManagement()
@@ -103,6 +112,38 @@ def main():
         print("5. Exit")
 
         choice = input("Enter your choice: ")
+
+        if choice == "1":
+            while True:
+                try:
+                    name = input("Enter student's name: ").capitalize()
+                    if not name.replace(" ", "").isalpha():
+                        raise ValueError("Invalid name. Name must contain only alphabets and spaces.")
+                    break
+                except ValueError as e:
+                    print(str(e))
+
+            while True:
+                try:
+                    roll_number = int(input("Enter student's roll number (1000-9999): "))
+                    if not (1000 <= roll_number <= 9999):
+                        raise ValueError("Invalid roll number. Roll number must be between 1000 and 9999.")
+                    if management.binary_search(roll_number):
+                        raise ValueError("Roll number already exists. Please enter a unique roll number.")
+                    break
+                except ValueError as e:
+                    print(str(e))
+
+            while True:
+                try:
+                    grade = input("Enter student's grade: ")
+                    if grade.upper() not in ["A", "B", "C", "D", "E", "F"]:
+                        raise ValueError("Invalid grade. Grade must be one of: A, B, C, D, E, F")
+                    break
+                except ValueError as e:
+                    print(str(e))
+
+            management.add_student(name, roll_number, grade)
 
 
 if __name__ == '__main__':
