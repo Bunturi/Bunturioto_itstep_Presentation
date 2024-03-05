@@ -103,6 +103,17 @@ class StudentManagement:
             for student in self.students:
                 print(student)
 
+    # Search for a student by roll number
+    def search_student_by_roll_number(self, roll_number):
+        self.students = self.read_data()
+
+        student = self.binary_search(roll_number)
+        if student:
+            print("Student found:")
+            print(student)
+        else:
+            print("Student not found")
+
 
 def main():
     management = StudentManagement()
@@ -155,6 +166,18 @@ def main():
 
         elif choice == "2":
             management.display_students()
+
+        elif choice == "3":
+            while True:
+                try:
+                    roll_number_to_search = int(input("Enter roll number to search for the student: "))
+                    if not str(roll_number_to_search).isdigit():
+                        raise ValueError("Invalid roll number. Roll number must contain only digits.")
+                    break
+                except ValueError as e:
+                    print(str(e))
+
+            management.search_student_by_roll_number(roll_number_to_search)
 
 
 
